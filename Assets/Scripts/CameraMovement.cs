@@ -18,6 +18,9 @@ public class CameraMovement : MonoBehaviour
 
     private float offset;
 
+    private bool mouseDown;
+    private float mouseTimer;
+
     void Start()
     {
         instance = this;
@@ -40,7 +43,11 @@ public class CameraMovement : MonoBehaviour
 
         var dir = Vector2.zero;
 
-        if (Input.GetMouseButton(0))
+        mouseDown = Input.GetMouseButton(0);
+        if (mouseDown) mouseTimer += Time.deltaTime;
+        if (!mouseDown) mouseTimer = 0;
+
+        if (mouseTimer > 0.25f)
             dir += new Vector2(Input.GetAxis("Horizontal Test"), Input.GetAxis("Vertical Test"));
 
         dir += new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
